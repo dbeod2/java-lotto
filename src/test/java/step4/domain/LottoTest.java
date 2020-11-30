@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import step4.controller.LottoTicketMaker;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -18,9 +19,13 @@ public class LottoTest {
         int manualLottoQty = 1;
 
         Amount amount = Amount.of(14000);
+        List<Lotto> lottos = new ArrayList<>();
         List<Numbers> lottoNumbers = Stream.of("1,2,3,7,8,9").map(Numbers::of).collect(Collectors.toList());
-        LottoTicketMaker lottoTicketMaker = LottoTicketMaker.of(amount, manualLottoQty, lottoNumbers);
-        Lottos lottos = lottoTicketMaker.getLottoTicket();
-        assertThat(lottos.getLottos().size()).isEqualTo(14);
+        Lotto lotto = Lotto.of(lottoNumbers);
+        lottos.add(lotto);
+
+        LottoTicketMaker lottoTicketMaker = LottoTicketMaker.of(amount, manualLottoQty, lottos);
+        Lottos lottoTicket = lottoTicketMaker.getLottoTicket();
+        assertThat(lottoTicket.getLottos().size()).isEqualTo(14);
     }
 }
